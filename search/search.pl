@@ -54,14 +54,14 @@ transition(state(Room,Keys), ActionsSoFar, state(Next,Keys2), [move(Room,Next)|A
 
 % Locked door forward
 transition(state(Room,Keys), ActionsSoFar, state(Next,Keys2),
-           [unlock(Color), move(Room,Next)|ActionsSoFar]) :-
+           [move(Room,Next), unlock(Color)|ActionsSoFar]) :-
     locked_door(Room, Next, Color),
     member(Color, Keys),
     pick_up_key(Next, Keys, Keys2).
 
 % Locked door backward
 transition(state(Room,Keys), ActionsSoFar, state(Next,Keys2),
-           [unlock(Color), move(Room,Next)|ActionsSoFar]) :-
+           [move(Room,Next), unlock(Color)|ActionsSoFar]) :-
     locked_door(Next, Room, Color),
     member(Color, Keys),
     pick_up_key(Next, Keys, Keys2).
