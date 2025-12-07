@@ -53,18 +53,18 @@ transition(state(Room,Keys), ActionsSoFar, state(Next,Keys2), [move(Room,Next)|A
     pick_up_key(Next, Keys, Keys2).
 
 % Locked door forward
-transition(state(Room,Keys), ActionsSoFar, state(Next,Keys2),
-           [move(Room,Next), unlock(Color)|ActionsSoFar]) :-
+transition(state(Room,Keys), ActionsSoFar, state(Next,Keys2), NewActions) :-
     locked_door(Room, Next, Color),
     member(Color, Keys),
-    pick_up_key(Next, Keys, Keys2).
+    pick_up_key(Next, Keys, Keys2),
+    append([move(Room,Next), unlock(Color)], ActionsSoFar, NewActions).
 
 % Locked door backward
-transition(state(Room,Keys), ActionsSoFar, state(Next,Keys2),
-           [move(Room,Next), unlock(Color)|ActionsSoFar]) :-
+transition(state(Room,Keys), ActionsSoFar, state(Next,Keys2), NewActions) :-
     locked_door(Next, Room, Color),
     member(Color, Keys),
-    pick_up_key(Next, Keys, Keys2).
+    pick_up_key(Next, Keys, Keys2),
+    append([move(Room,Next), unlock(Color)], ActionsSoFar, NewActions).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Key pickup
